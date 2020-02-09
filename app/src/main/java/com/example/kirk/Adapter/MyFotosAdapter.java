@@ -34,11 +34,11 @@ public class MyFotosAdapter extends RecyclerView.Adapter<MyFotosAdapter.ViewHold
     @Override
     public ViewHolder  onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.fotos_item, viewGroup, false);
-        return new MyFotosAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MyFotosAdapter.ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int position) {
 
         final Post post = mPosts.get(position);
 

@@ -11,27 +11,30 @@
         android:id="@+id/bar"
         android:background="?android:attr/windowBackground">
 
-        <androidx.appcompat.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/windowBackground"
-            android:id="@+id/toolbar">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/search"/>
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:layout_marginLeft="10dp"
+                android:layout_alignStart="@+id/heading_label"
+                android:layout_below="@+id/heading_label"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_toStartOf="@+id/search_btn"
+                android:background="@drawable/search_layout"
+                android:ems="10"
+                android:fontFamily="@font/nunito_semibold"
+                android:hint="Search here"
+                android:inputType="textPersonName"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                android:textColor="#999999"
+                android:textSize="16sp"
                 android:id="@+id/search_bar"
-                android:hint="Search..."
-                android:layout_marginStart="10dp" />
+                />
 
-        </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView

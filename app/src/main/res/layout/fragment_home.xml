@@ -11,41 +11,41 @@
         android:layout_height="wrap_content"
         android:background="?android:attr/windowBackground">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/windowBackground">
+            android:layout_height="wrap_content">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/logo"
-                    android:layout_width="49dp"
-                    android:layout_height="36dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/ic_action_office" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/slum"
+                android:layout_width="40dp"
+                android:layout_height="36dp"
+                android:layout_margin="8dp"
+                android:src="@drawable/golo"/>
 
 
-                <ImageView
-                    android:id="@+id/message_view"
-                    android:layout_width="49dp"
-                    android:layout_height="36dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/ic_action_office2" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/message_view"
+                android:layout_width="49dp"
+                android:layout_height="36dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_action_office2"
+                android:layout_margin="8dp"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/job_view"
+                android:layout_width="40dp"
+                android:layout_height="36dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="75dp"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/job" />
 
 
-            </RelativeLayout>
-
-
-
-        </androidx.appcompat.widget.Toolbar>
+        </RelativeLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView

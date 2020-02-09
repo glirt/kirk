@@ -42,13 +42,13 @@ import static android.content.Context.MODE_PRIVATE;
 
         @NonNull
         @Override
-        public NotificationAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.notification_item, parent, false);
-            return new NotificationAdapter.ViewHolder(view);
+            return new ViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull final NotificationAdapter.ViewHolder viewholder, final int position) {
+        public void onBindViewHolder(@NonNull final ViewHolder viewholder, final int position) {
 
             final Notification notification = mNotification.get(position);
 

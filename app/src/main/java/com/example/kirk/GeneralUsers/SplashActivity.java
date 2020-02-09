@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.example.kirk.R;
+import com.example.kirk.introscreen.IntroActivity;
 import com.google.firebase.auth.FirebaseUser;
 
 public class SplashActivity extends AppCompatActivity {
@@ -33,7 +34,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 // This method will be executed once the timer is over
                 // Start your app main activity
-                Intent i = new Intent(SplashActivity.this, createacctActivity.class);
+                Intent i = new Intent(SplashActivity.this, IntroActivity.class);
                 startActivity(i);
 
                 // close this activity

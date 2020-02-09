@@ -12,7 +12,7 @@ import com.example.kirk.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class OptionsActivity extends AppCompatActivity {
-    TextView logout, ticketing;
+    TextView logout, changepassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,14 +30,21 @@ public class OptionsActivity extends AppCompatActivity {
         });
 
         logout = (TextView) findViewById(R.id.logout);
-        ticketing = findViewById(R.id.ticketing);
+        changepassword= findViewById(R.id.changepassword);
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(OptionsActivity.this, createacctActivity.class)
+                startActivity(new Intent(OptionsActivity.this, LoginActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            }
+        });
+
+        changepassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(OptionsActivity.this, ForgottenpasswordActivity.class));
             }
         });
 

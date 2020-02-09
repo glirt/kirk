@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import com.example.kirk.Fragment.ProfileFragment;
-import com.example.kirk.MainActivity;
+import com.example.kirk.GeneralUsers.MainActivity;
 import com.example.kirk.Model.User;
 import com.example.kirk.R;
 import com.google.firebase.auth.FirebaseAuth;

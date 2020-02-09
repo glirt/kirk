@@ -24,18 +24,18 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:background="@drawable/createbutton"
-            android:text="USER ACCOUNT"
+            android:text="LOGIN ACCOUNT"
             android:textAlignment="center">
 
         </Button>
 
         <Button
             android:id="@+id/bizact"
-            android:layout_width="170dp"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="60dp"
             android:background="@drawable/createbutton"
-            android:text="BUSSINESS  ACCOUNT"
+            android:text="SIGNUP ACCOUNT"
             android:textAlignment="center"></Button>
     </LinearLayout>
 

@@ -31,6 +31,12 @@ public class ForgottenpasswordActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Reset Password");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         send_email = findViewById(R.id.send_email);
         btn_reset = findViewById(R.id.btn_reset);

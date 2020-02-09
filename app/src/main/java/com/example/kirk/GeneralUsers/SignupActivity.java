@@ -27,7 +27,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.kirk.MainActivity;
 import com.example.kirk.R;
 import com.flutterwave.raveandroid.RaveConstants;
 import com.flutterwave.raveandroid.RavePayActivity;
@@ -62,8 +61,8 @@ public class SignupActivity extends AppCompatActivity {
 
     //Some variables will gbe gotten from registration such as name, email...
     //I assumed them to be examples
-    private  String email = "johndoe@gmail.com";
-    private  String firstName = "John", lastName = "Doe";
+    private String email = "johndoe@gmail.com";
+    private String firstName = "John", lastName = "Doe";
 
     //Public Key, Secret Key and Encryption Key
     //Set each key from flutter wave
@@ -74,7 +73,7 @@ public class SignupActivity extends AppCompatActivity {
     //End point to verify payment
     private final String VERIFY_PAYMENT_ENDPOINT = "https://ravesandboxapi.flutterwave.com/flwv3-pug/getpaidx/api/v2/verify";
     private final String CURRENT_DATE_ENDPOINT = "https://floating-forest-76407.herokuapp.com/currentDate";
-    private final String  PAY_WITH_TOKEN_ENDPOINT = "https://api.ravepay.co/flwv3-pug/getpaidx/api/tokenized/charge";
+    private final String PAY_WITH_TOKEN_ENDPOINT = "https://api.ravepay.co/flwv3-pug/getpaidx/api/tokenized/charge";
 
 
     //Tokens
@@ -97,23 +96,23 @@ public class SignupActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("SharedPreferences", Context.MODE_PRIVATE);
         requestQueue = Volley.newRequestQueue(this);
 
-        username =  findViewById(R.id.username);
-        email2 =  findViewById(R.id.email);
-        fullname =  findViewById(R.id.fullname);
-       prof =  findViewById(R.id.profession);
-        password =  findViewById(R.id.Password);
-        register =  findViewById(R.id.register);
-        reg2 =  findViewById(R.id.region2);
+        username = findViewById(R.id.username);
+        email2 = findViewById(R.id.email);
+        fullname = findViewById(R.id.fullname);
+        prof = findViewById(R.id.profession);
+        password = findViewById(R.id.Password);
+        register = findViewById(R.id.register);
+        reg2 = findViewById(R.id.region2);
         txt_login = findViewById(R.id.txt_login);
         cd = findViewById(R.id.cd);
         prof.setThreshold(1);
 
-        ArrayAdapter<String>adapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item, profession);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, profession);
         prof.setAdapter(adapter);
 
         reg2.setThreshold(1);
 
-        ArrayAdapter<String>adapter2 = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item, region2);
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, region2);
         reg2.setAdapter(adapter2);
 
         auth = FirebaseAuth.getInstance();
@@ -124,7 +123,6 @@ public class SignupActivity extends AppCompatActivity {
                 startActivity(new Intent(SignupActivity.this, LoginActivity.class));
             }
         });
-
 
 
         cd.setOnClickListener(new View.OnClickListener() {
@@ -149,19 +147,18 @@ public class SignupActivity extends AppCompatActivity {
     }
 
 
-
     private void onClickSubscribe() {
         initializeRave();
     }
 
     //Function to initialize payment with card
     private void initializeRave() {
-        email= email2.getText().toString();
-        firstName =username.getText().toString();
+        email = email2.getText().toString();
+        firstName = username.getText().toString();
         lastName = fullname.getText().toString();
 
         RavePayManager transaction = new RavePayManager(this);
-        transaction.setAmount(100.0);
+        transaction.setAmount(1000.0);
         transaction.setCurrency("NGN");
         transaction.setEmail(email);
         transaction.setfName(firstName);
@@ -205,6 +202,11 @@ public class SignupActivity extends AppCompatActivity {
 
     //Function to verify payment with card. It also generate the card token with the "saveCardAndNextPaymentDate" will work on
     private void verifyPayment() {
+        pd = new ProgressDialog(SignupActivity.this);
+        pd.setMessage("Please wait...");
+        pd.setCancelable(false);
+        pd.setCanceledOnTouchOutside(false);
+        pd.show();
         final HashMap<String, String> params = new HashMap<>();
         params.put("txref", email);
         params.put("SECKEY", SECRET_KEY);
@@ -231,6 +233,7 @@ public class SignupActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        proceedToApp();
                         Toast.makeText(SignupActivity.this, "Check Your Internet Connection. Card not saved", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -289,7 +292,7 @@ public class SignupActivity extends AppCompatActivity {
                         Toast.makeText(SignupActivity.this, "Check Your Internet Connection and Try Again.", Toast.LENGTH_LONG).show();
                     }
                 }
-        ){
+        ) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
@@ -314,14 +317,14 @@ public class SignupActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             int month = Integer.parseInt(response.get("monthValue").toString());
-                            int year = Integer.parseInt(response.get("dayOfTheMonth").toString());
-                            int day = Integer.parseInt(response.get("year").toString());
+                            int year = Integer.parseInt(response.get("year").toString());
+                            int day = Integer.parseInt(response.get("dayOfTheMonth").toString());
                             LocalDate todaysDate = LocalDate.of(year, month, day);
 
                             LocalDate dateToPay = extractDate(sharedPreferences.getString("dateToPay", "0,1,1"));
                             if (todaysDate.isEqual(dateToPay) || todaysDate.isAfter(dateToPay)) {
                                 monthlyCharges();
-                            }else{
+                            } else {
                                 proceedToApp();
                             }
 
@@ -332,7 +335,7 @@ public class SignupActivity extends AppCompatActivity {
                     }
 
                     @SuppressLint("NewApi")
-                    private LocalDate extractDate(String date){
+                    private LocalDate extractDate(String date) {
                         String[] arrayOfData = date.split(",");
                         int year = Integer.parseInt(arrayOfData[0]);
                         int month = Integer.parseInt(arrayOfData[1]);
@@ -346,7 +349,7 @@ public class SignupActivity extends AppCompatActivity {
 
                     }
                 }
-        ){
+        ) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
@@ -366,7 +369,7 @@ public class SignupActivity extends AppCompatActivity {
         params.put("currency", "NGN");
         params.put("email", sharedPreferences.getString("email", "nothing yet"));
         params.put("txRef", sharedPreferences.getString("email", "nothing yet"));
-        params.put("amount", 100);
+        params.put("amount", 1000);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.POST,
@@ -376,8 +379,8 @@ public class SignupActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            if(response.getString("status").equalsIgnoreCase("success")
-                                    && response.getJSONObject("data").getString("chargeResponseCode").equalsIgnoreCase("00")){
+                            if (response.getString("status").equalsIgnoreCase("success")
+                                    && response.getJSONObject("data").getString("chargeResponseCode").equalsIgnoreCase("00")) {
                                 Toast.makeText(
                                         SignupActivity.this,
                                         "Monthly Payment Successful",
@@ -385,8 +388,11 @@ public class SignupActivity extends AppCompatActivity {
                                 ).show();
                                 saveCardAndNextPaymentDate();
                                 proceedToApp();
+                            }else {
+                                initializeRave();
                             }
                         } catch (JSONException e) {
+                            initializeRave();
                             e.printStackTrace();
                         }
                     }
@@ -397,7 +403,7 @@ public class SignupActivity extends AppCompatActivity {
                         Toast.makeText(SignupActivity.this, "Check your internet connection.", Toast.LENGTH_SHORT).show();
                     }
                 }
-        ){
+        ) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
@@ -413,22 +419,15 @@ public class SignupActivity extends AppCompatActivity {
     //A dummy function that is called when every payment is satisfied and true
     private void proceedToApp() {
         Toast.makeText(this, "Worked", Toast.LENGTH_LONG).show();
-        String FIREBASE_DATABASE_URL ="";
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance(FIREBASE_DATABASE_URL);
-        firebaseDatabase.getReference().child("").setValue("");
+//        String FIREBASE_DATABASE_URL = "";
+//        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance(FIREBASE_DATABASE_URL);
+//        firebaseDatabase.getReference().child("").setValue("");
         registerToFireBase();
 
     }
 
 
-
-
-
     private void registerToFireBase() {
-        pd = new ProgressDialog(SignupActivity.this);
-        pd.setMessage("Please wait...");
-        pd.show();
-
         String str_username = username.getText().toString();
         String str_fullname = fullname.getText().toString();
         String str_email = email2.getText().toString();
@@ -437,18 +436,18 @@ public class SignupActivity extends AppCompatActivity {
         String str_reg2 = reg2.getText().toString();
 
 
-        if (TextUtils.isEmpty(str_username)  || TextUtils.isEmpty(str_fullname) || TextUtils.isEmpty(str_email) || TextUtils.isEmpty(str_password)|| TextUtils.isEmpty(str_reg2)){
+        if (TextUtils.isEmpty(str_username) || TextUtils.isEmpty(str_fullname) || TextUtils.isEmpty(str_email) || TextUtils.isEmpty(str_password) || TextUtils.isEmpty(str_reg2)) {
             Toast.makeText(SignupActivity.this, "All fields are required!", Toast.LENGTH_SHORT).show();
-        } else if(str_password.length() < 6){
+        } else if (str_password.length() < 6) {
             Toast.makeText(SignupActivity.this, "Password must have 6 characters!", Toast.LENGTH_SHORT).show();
         } else {
-            register(str_username, str_prof, str_fullname, str_email, str_password, str_reg2 );
+            register(str_username, str_prof, str_fullname, str_email, str_password, str_reg2);
         }
     }
 
 
-    private static final String[] profession =new  String[]{"Artist", "Makeup Artist", "Dancer", "Videographer", "Photographer", "Comedian","Event Planner","Show Promoter","Disc Jockey(DJ)","Video Jockey(VJ)","Music Producer","Model", "Vixen","Movie Producer","Actor","Actress","Talent Manager","Sound Engineer","OAP"};
-    private static final String[] region2 = new String[] {"Abia",
+    private static final String[] profession = new String[]{"Artist", "Makeup Artist", "Fashion Designer","Script Writer","Model Agency", "Record Label", "Song Writer", "Dance Group", "Dancer", "Videographer", "Photographer", "Comedian", "Event Planner", "Show Promoter", "Disc Jockey(DJ)", "Video Jockey(VJ)", "Music Producer", "Model", "Vixen", "Movie Producer", "Actor", "Actress", "Talent Manager", "Sound Engineer", "OAP"};
+    private static final String[] region2 = new String[]{"Abia",
             "Adamawa",
             "Anambra",
             "Akwa Ibom",
@@ -486,12 +485,14 @@ public class SignupActivity extends AppCompatActivity {
             "Yobe",
             "Zamfara"};
 
-    public void register(final String username, final String prof, final String fullname, String email, String password, final String region2 ){
+    public void register(final String username, final String prof, final String fullname, String email, String password, final String region2) {
+        Toast.makeText(this, "In REGISTER", Toast.LENGTH_SHORT).show();
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
+                        if (task.isComplete()) {
+                            Toast.makeText(SignupActivity.this, "Completed Task", Toast.LENGTH_SHORT).show();
                             FirebaseUser firebaseUser = auth.getCurrentUser();
                             String userID = firebaseUser.getUid();
 
@@ -500,18 +501,19 @@ public class SignupActivity extends AppCompatActivity {
 
                             map.put("id", userID);
                             map.put("username", username.toLowerCase());
-                            map.put("profession",prof);
+                            map.put("profession", prof);
                             map.put("fullname", fullname);
                             map.put("status", "offline");
-                            map.put("imageurl", "https://firebasestorage.googleapis.com/v0/b/kirk-30f6a.appspot.com/o/avatar-1577909_1280.png?alt=media&token=86b4f153-7c41-4322-9100-96a61860efe2");
+                            map.put("imageurl", "https://firebasestorage.googleapis.com/v0/b/kirk-30f6a.appspot.com/o/avatar-1577909_1280.png?alt=media&token=b1b3e744-b96b-48b5-9d10-588acbcbbf7b");
                             map.put("bio", "");
                             map.put("location", region2);
                             map.put("search", username.toLowerCase());
+                            map.put("recent_chat", "" );
 
                             reference.setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()){
+                                    if (task.isSuccessful()) {
                                         pd.dismiss();
                                         Intent intent = new Intent(SignupActivity.this, MainActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

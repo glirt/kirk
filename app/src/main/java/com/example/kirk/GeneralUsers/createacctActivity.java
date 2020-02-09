@@ -7,9 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.kirk.MainActivity;
 import com.example.kirk.R;
-import com.example.kirk.biz.bussiness_logActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -41,7 +39,7 @@ public class createacctActivity extends AppCompatActivity {
         biz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(createacctActivity.this, bussiness_logActivity.class));
+                startActivity(new Intent(createacctActivity.this, SignupActivity.class));
             }
         });
 

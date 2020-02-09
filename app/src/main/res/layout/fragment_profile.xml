@@ -66,21 +66,21 @@
                     android:id="@+id/image"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
-                    android:layout_marginLeft="130dp" />
+                    android:layout_marginLeft="120dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:orientation="vertical"
                     android:paddingLeft="20dp"
                     android:paddingRight="4dp"
-                    android:layout_height="80dp">
+                    android:layout_height="120dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:gravity="center"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginLeft="20dp">
+                        android:layout_marginLeft="12dp">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -152,7 +152,7 @@
                     <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="0dp"
+                        android:layout_marginTop="15dp"
                         android:id="@+id/edit_profile"
                         />
 
@@ -220,6 +220,13 @@
                     android:src="@drawable/ic_grid"
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_height="wrap_content" />
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:id="@+id/saved_fotos"
+                    android:src="@drawable/ic_save"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/buttonBarButtonStyle"/>
 
 
             </LinearLayout>
@@ -242,8 +249,6 @@
         </LinearLayout>
 
     </ScrollView>
-
-
 
 
 </RelativeLayout>
